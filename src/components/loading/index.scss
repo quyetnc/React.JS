@@ -1,0 +1,91 @@
+$spinner-speed: 1s;
+@import "../../assets/colors.scss";
+
+.app-spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 50000;
+
+  .app-spinner {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+  }
+
+  .app-spinner::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
+  .app-spinner__svg {
+    animation: app-spinner-rotate 1s linear infinite;
+    height: 100%;
+    transform-origin: center center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .app-spinner__circle {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: 0;
+    stroke: $white;
+    animation: app-spinner-dash $spinner-speed ease-in-out infinite,
+      app-spinner-color 4 * $spinner-speed ease-in-out infinite;
+    stroke-linecap: round;
+  }
+
+  @keyframes app-spinner-rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes app-spinner-dash {
+    0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -35px;
+    }
+    100% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -124px;
+    }
+  }
+
+  @keyframes app-spinner-color {
+    100%,
+    0% {
+      stroke: $white;
+    }
+    20% {
+      stroke: $valid;
+    }
+    40% {
+      stroke: $primary;
+    }
+    60% {
+      stroke: $error;
+    }
+    80% {
+      stroke: $warning;
+    }
+  }
+}
